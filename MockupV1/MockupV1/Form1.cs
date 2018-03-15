@@ -30,5 +30,10 @@ namespace MockupV1
                 MessageBox.Show("invalid username or password");
             }
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
