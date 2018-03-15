@@ -8,3 +8,4 @@ C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.c
 C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.CoreCompileInputs.cache
 C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.exe
 C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.pdb
+C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.Form2.resources

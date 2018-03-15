@@ -21,13 +21,14 @@ namespace MockupV1
         {
             if(textBox1.Text == "admin" && textBox2.Text == "1234")
             {
-                new Form2().Show();
+                Form2 f2 = new Form2();
+                f2.Show();
                 this.Hide();
             }
             else
             {
                 MessageBox.Show("invalid username or password");
-            }  
+            }
         }
     }
 }
