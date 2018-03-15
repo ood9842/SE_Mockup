@@ -16,5 +16,18 @@ namespace MockupV1
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(textBox1.Text == "admin" && textBox2.Text == "1234")
+            {
+                new Form2().Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("invalid username or password");
+            }  
+        }
     }
 }
