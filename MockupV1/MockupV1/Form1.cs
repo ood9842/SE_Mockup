@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace MockupV1
 {
     public partial class Form1 : Form
     {
+        private Thread th;
         public Form1()
         {
             InitializeComponent();
@@ -21,14 +23,20 @@ namespace MockupV1
         {
             if(textBox1.Text == "admin" && textBox2.Text == "1234")
             {
-                Form2 f2 = new Form2();
-                f2.Show();
-                this.Hide();
+                this.Close();
+                th = new Thread(openAnotherForm);
+                th.SetApartmentState(ApartmentState.STA);
+                th.Start();
             }
             else
             {
                 MessageBox.Show("invalid username or password");
             }
+        }
+
+        private void openAnotherForm()
+        {
+            Application.Run(new Form2());
         }
 
         private void label1_Click(object sender, EventArgs e)

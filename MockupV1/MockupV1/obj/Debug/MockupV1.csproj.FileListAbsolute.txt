@@ -24,3 +24,6 @@ D:\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Data.dll
 D:\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Web.dll
 D:\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Data.xml
 D:\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Web.xml
+C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Data.xml
+C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Web.xml
+C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.CopyComplete
