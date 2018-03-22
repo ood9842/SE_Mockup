@@ -20,30 +20,38 @@ namespace MockupV1
         {
             InitializeComponent();
             databasecmd = new ConnectDatabase();
-            databasecmd.connectDB();
+
+        }
+        public void updateDataGridView()
+        {
+            if(databasecmd.connection.State == ConnectionState.Closed)
+            {
+                databasecmd.connectDB();
+
+            }
             try
             {
-                using (MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT epc,time,ant_id FROM checkpoint", databasecmd.connection))
+                //using (MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT epc,time,ant_id FROM checkpoint", databasecmd.connection))
+                using (MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT epc,time,ant_id FROM checkpoint",databasecmd.connection))
                 {
                     DataSet ds = new DataSet();
                     adapter.Fill(ds);
                     dataGridView1.DataSource = ds.Tables[0];
                 }
 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (databasecmd.connection.State == ConnectionState.Open)
-                {
-                    databasecmd.connection.Clone();
                 }
-            }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    if (databasecmd.connection.State == ConnectionState.Open)
+                    {
+                        databasecmd.connection.Clone();
+                    }
+                }
         }
-
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -72,6 +80,68 @@ namespace MockupV1
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
   
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            updateDataGridView();
+            databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 1";
+            using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    label2.Text = "ant1 : " + reader.GetString(0);
+                }
+            }
+            databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 2";
+            using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    label5.Text = "ant2 : " + reader.GetString(0);
+                }
+            }
+            databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 3";
+            using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    label9.Text = "ant3 : " + reader.GetString(0);
+                }
+            }
+            databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 4";
+            using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    label7.Text = "ant4 : " + reader.GetString(0);
+                }
+            }
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = new DataGridView();
+            label2.Text = "ant1 : 00:00:00:00";
+            label5.Text = "ant2 : 00:00:00:00";
+            label9.Text = "ant3 : 00:00:00:00";
+            label7.Text = "ant4 : 00:00:00:00";
         }
     }
 }

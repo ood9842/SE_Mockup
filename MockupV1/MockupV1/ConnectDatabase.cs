@@ -28,7 +28,7 @@ namespace MockupV1
         {
             Instance = this;
             _connection = new MySqlConnection(MyConnectionString);
-            _cmd = new MySqlCommand();
+            _cmd = new MySqlCommand("", connection);
         }
 
         public void connectDB()
