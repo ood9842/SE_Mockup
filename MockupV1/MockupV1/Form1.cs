@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
@@ -15,11 +15,14 @@ namespace MockupV1
     public partial class Form1 : Form
     {
         private static ConnectDatabase databasecmd;
+        private Thread tesk;
 
         public Form1()
         {
             InitializeComponent();
             textBox2.PasswordChar = '*';
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnter);
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnter);
         }
 
 
@@ -44,14 +47,14 @@ namespace MockupV1
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void checkText()
         {
             //if(textBox1.Text == "admin" && textBox2.Text == "1234")
-            if(validate_login(textBox1.Text,textBox2.Text))
+            if (validate_login(textBox1.Text, textBox2.Text))
             {
-                Form2 f2 = new Form2();
-                f2.Show();
-                this.Hide();
+                tesk = new Thread(changeOtherForm);
+                this.Close();
+                tesk.Start();
             }
             else
             {
@@ -59,9 +62,28 @@ namespace MockupV1
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void changeOtherForm()
         {
+            Application.Run(new Form2());
+        }
 
+        //key event
+        private void CheckEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                checkText();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            checkText();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }
