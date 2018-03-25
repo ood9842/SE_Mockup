@@ -15,13 +15,15 @@ namespace MockupV1
     public partial class Form2 : Form
     {
         private static ConnectDatabase databasecmd;
+        private bool isStart = false;
+        private bool isReset = false;
 
         public Form2()
         {
             InitializeComponent();
             databasecmd = new ConnectDatabase();
-
         }
+
         public void updateDataGridView()
         {
             if(databasecmd.connection.State == ConnectionState.Closed)
@@ -52,29 +54,72 @@ namespace MockupV1
                     }
                 }
         }
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            ant1.ForeColor = Color.Gray;
+            ant2.ForeColor = Color.Gray;
+            ant3.ForeColor = Color.Gray;
+            ant4.ForeColor = Color.Gray;
+            ant5.ForeColor = Color.Gray;
+            ant6.ForeColor = Color.Gray;
+            ant7.ForeColor = Color.Gray;
+            ant8.ForeColor = Color.Gray;
+            ant1.Text = "ant1 : 00:00:00:00";
+            ant2.Text = "ant2 : 00:00:00:00";
+            ant3.Text = "ant3 : 00:00:00:00";
+            ant4.Text = "ant4 : 00:00:00:00";
+            ant5.Text = "ant1 : 00:00:00:00";
+            ant6.Text = "ant2 : 00:00:00:00";
+            ant7.Text = "ant3 : 00:00:00:00";
+            ant8.Text = "ant4 : 00:00:00:00";
+        }
 
+        private void resetAnt()
+        {
+            ant1.Text = "ant1 : 00:00:00:00";
+            ant2.Text = "ant2 : 00:00:00:00";
+            ant3.Text = "ant3 : 00:00:00:00";
+            ant4.Text = "ant4 : 00:00:00:00";
+            ant5.Text = "ant1 : 00:00:00:00";
+            ant6.Text = "ant2 : 00:00:00:00";
+            ant7.Text = "ant3 : 00:00:00:00";
+            ant8.Text = "ant4 : 00:00:00:00";
+        }
+
+        private void connectLAN_Click(object sender, EventArgs e)
+        {
+            if(!port4.Checked && !port8.Checked)
+            {
+                MessageBox.Show("Please slect port anable");
+            }
+            else if (port4.Checked)
+            {
+                //sent signal enable Hardware
+                //need function to check port status
+                ant1.ForeColor = Color.Green;
+                ant2.ForeColor = Color.Green;
+                ant3.ForeColor = Color.Green;
+                ant4.ForeColor = Color.Green;
+            }
+            else
+            {
+                //sent signal enable Hardware
+                //need function to check port status
+                ant1.ForeColor = Color.Green;
+                ant2.ForeColor = Color.Green;
+                ant3.ForeColor = Color.Green;
+                ant4.ForeColor = Color.Green;
+                ant5.ForeColor = Color.Green;
+                ant6.ForeColor = Color.Green;
+                ant7.ForeColor = Color.Green;
+                ant8.ForeColor = Color.Green;
+            }
+            start.Enabled = true;
+            pointList.Enabled = false;
+            port4.Enabled = false;
+            port8.Enabled = false;
+            connectLAN.Enabled = false;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -82,66 +127,75 @@ namespace MockupV1
   
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        private void start_Click(object sender, EventArgs e)
+        {
+            isStart = !isStart;
+            if(isStart)
+            {
+                reset.Enabled = false;
+                start.BackColor = Color.Red;
+                start.Text = "Stop";
+                //updateDataGridView();
+                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 1";
+                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
+                //{
+                //    if (reader.Read())
+                //    {
+                //        ant1.Text = "ant1 : " + reader.GetString(0);
+                //    }
+                //}
+                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 2";
+                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
+                //{
+                //    if (reader.Read())
+                //    {
+                //        ant2.Text = "ant2 : " + reader.GetString(0);
+                //    }
+                //}
+                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 3";
+                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
+                //{
+                //    if (reader.Read())
+                //    {
+                //        ant3.Text = "ant3 : " + reader.GetString(0);
+                //    }
+                //}
+                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 4";
+                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
+                //{
+                //    if (reader.Read())
+                //    {
+                //        ant4.Text = "ant4 : " + reader.GetString(0);
+                //    }
+                //}
+            }
+            else
+            {
+                reset.Enabled = true;
+                start.BackColor = Color.White;
+                start.Text = "Start";
+            }
+        }
+
+        private void reset_Click(object sender, EventArgs e)
+        {
+            isReset = !isReset;
+            if (isReset)
+            {
+                reset.Enabled = false;
+                dataGridView1.DataSource = new DataGridView();
+                resetAnt();
+            }
+        }
+
+        private void optionToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label9_Click(object sender, EventArgs e)
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            updateDataGridView();
-            databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 1";
-            using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    label2.Text = "ant1 : " + reader.GetString(0);
-                }
-            }
-            databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 2";
-            using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    label5.Text = "ant2 : " + reader.GetString(0);
-                }
-            }
-            databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 3";
-            using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    label9.Text = "ant3 : " + reader.GetString(0);
-                }
-            }
-            databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 4";
-            using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    label7.Text = "ant4 : " + reader.GetString(0);
-                }
-            }
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            dataGridView1.DataSource = new DataGridView();
-            label2.Text = "ant1 : 00:00:00:00";
-            label5.Text = "ant2 : 00:00:00:00";
-            label9.Text = "ant3 : 00:00:00:00";
-            label7.Text = "ant4 : 00:00:00:00";
         }
     }
 }
