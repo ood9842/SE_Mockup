@@ -83,7 +83,8 @@ namespace MockupV1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
         }
     }
 }

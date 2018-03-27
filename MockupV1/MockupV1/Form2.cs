@@ -57,6 +57,10 @@ namespace MockupV1
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            WindowState = FormWindowState.Maximized;
+
             ant1.ForeColor = Color.Gray;
             ant2.ForeColor = Color.Gray;
             ant3.ForeColor = Color.Gray;
@@ -194,6 +198,16 @@ namespace MockupV1
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
         {
 
         }

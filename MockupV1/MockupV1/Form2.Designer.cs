@@ -42,16 +42,6 @@
             this.ant3 = new System.Windows.Forms.Label();
             this.switchRate = new System.Windows.Forms.Label();
             this.start = new System.Windows.Forms.Button();
-            this.reset = new System.Windows.Forms.Button();
-            this.performance = new System.Windows.Forms.Label();
-            this.readCount = new System.Windows.Forms.Label();
-            this.addDB = new System.Windows.Forms.Label();
-            this.addFile = new System.Windows.Forms.Label();
-            this.addServer = new System.Windows.Forms.Label();
-            this.serverStatus = new System.Windows.Forms.Label();
-            this.fileStatus = new System.Windows.Forms.Label();
-            this.dbStatus = new System.Windows.Forms.Label();
-            this.deviceStatus = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,27 +55,47 @@
             this.testSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.port4 = new System.Windows.Forms.RadioButton();
             this.port8 = new System.Windows.Forms.RadioButton();
-            this.status1 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.status2 = new System.Windows.Forms.Label();
-            this.status4 = new System.Windows.Forms.Label();
+            this.reset = new System.Windows.Forms.Button();
             this.status3 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.status4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.status1 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(334, 12);
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView1.Location = new System.Drawing.Point(5, 29);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(5);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(454, 298);
+            this.dataGridView1.Size = new System.Drawing.Size(881, 490);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // connectLAN
             // 
             this.connectLAN.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.connectLAN.Location = new System.Drawing.Point(57, 109);
+            this.connectLAN.Location = new System.Drawing.Point(130, 154);
             this.connectLAN.Name = "connectLAN";
             this.connectLAN.Size = new System.Drawing.Size(206, 53);
             this.connectLAN.TabIndex = 1;
@@ -108,17 +118,18 @@
             "point8",
             "point9",
             "finish"});
-            this.pointList.Location = new System.Drawing.Point(133, 68);
+            this.pointList.Location = new System.Drawing.Point(202, 80);
             this.pointList.Name = "pointList";
-            this.pointList.Size = new System.Drawing.Size(121, 21);
+            this.pointList.Size = new System.Drawing.Size(148, 21);
             this.pointList.TabIndex = 30;
             // 
             // checkPoint
             // 
             this.checkPoint.AutoSize = true;
-            this.checkPoint.Location = new System.Drawing.Point(64, 71);
+            this.checkPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.checkPoint.Location = new System.Drawing.Point(112, 83);
             this.checkPoint.Name = "checkPoint";
-            this.checkPoint.Size = new System.Drawing.Size(63, 13);
+            this.checkPoint.Size = new System.Drawing.Size(84, 18);
             this.checkPoint.TabIndex = 5;
             this.checkPoint.Text = "check point";
             // 
@@ -126,11 +137,11 @@
             // 
             this.ant1.AutoSize = true;
             this.ant1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ant1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ant1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ant1.ForeColor = System.Drawing.Color.Silver;
-            this.ant1.Location = new System.Drawing.Point(19, 183);
+            this.ant1.Location = new System.Drawing.Point(54, 256);
             this.ant1.Name = "ant1";
-            this.ant1.Size = new System.Drawing.Size(133, 20);
+            this.ant1.Size = new System.Drawing.Size(150, 24);
             this.ant1.TabIndex = 6;
             this.ant1.Text = "ant1: 00.00.00.00";
             // 
@@ -138,11 +149,11 @@
             // 
             this.ant5.AutoSize = true;
             this.ant5.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ant5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ant5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ant5.ForeColor = System.Drawing.Color.Silver;
-            this.ant5.Location = new System.Drawing.Point(177, 183);
+            this.ant5.Location = new System.Drawing.Point(270, 256);
             this.ant5.Name = "ant5";
-            this.ant5.Size = new System.Drawing.Size(133, 20);
+            this.ant5.Size = new System.Drawing.Size(150, 24);
             this.ant5.TabIndex = 7;
             this.ant5.Text = "ant5: 00.00.00.00";
             // 
@@ -150,11 +161,11 @@
             // 
             this.ant6.AutoSize = true;
             this.ant6.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ant6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ant6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ant6.ForeColor = System.Drawing.Color.Silver;
-            this.ant6.Location = new System.Drawing.Point(177, 213);
+            this.ant6.Location = new System.Drawing.Point(270, 286);
             this.ant6.Name = "ant6";
-            this.ant6.Size = new System.Drawing.Size(133, 20);
+            this.ant6.Size = new System.Drawing.Size(150, 24);
             this.ant6.TabIndex = 9;
             this.ant6.Text = "ant6: 00.00.00.00";
             // 
@@ -162,11 +173,11 @@
             // 
             this.ant2.AutoSize = true;
             this.ant2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ant2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ant2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ant2.ForeColor = System.Drawing.Color.Silver;
-            this.ant2.Location = new System.Drawing.Point(19, 213);
+            this.ant2.Location = new System.Drawing.Point(54, 286);
             this.ant2.Name = "ant2";
-            this.ant2.Size = new System.Drawing.Size(133, 20);
+            this.ant2.Size = new System.Drawing.Size(150, 24);
             this.ant2.TabIndex = 8;
             this.ant2.Text = "ant2: 00.00.00.00";
             // 
@@ -174,11 +185,11 @@
             // 
             this.ant8.AutoSize = true;
             this.ant8.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ant8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ant8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ant8.ForeColor = System.Drawing.Color.Silver;
-            this.ant8.Location = new System.Drawing.Point(177, 273);
+            this.ant8.Location = new System.Drawing.Point(270, 346);
             this.ant8.Name = "ant8";
-            this.ant8.Size = new System.Drawing.Size(133, 20);
+            this.ant8.Size = new System.Drawing.Size(150, 24);
             this.ant8.TabIndex = 13;
             this.ant8.Text = "ant8: 00.00.00.00";
             // 
@@ -186,11 +197,11 @@
             // 
             this.ant4.AutoSize = true;
             this.ant4.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ant4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ant4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ant4.ForeColor = System.Drawing.Color.Silver;
-            this.ant4.Location = new System.Drawing.Point(19, 273);
+            this.ant4.Location = new System.Drawing.Point(54, 346);
             this.ant4.Name = "ant4";
-            this.ant4.Size = new System.Drawing.Size(133, 20);
+            this.ant4.Size = new System.Drawing.Size(150, 24);
             this.ant4.TabIndex = 12;
             this.ant4.Text = "ant4: 00.00.00.00";
             // 
@@ -198,11 +209,11 @@
             // 
             this.ant7.AutoSize = true;
             this.ant7.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ant7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ant7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ant7.ForeColor = System.Drawing.Color.Silver;
-            this.ant7.Location = new System.Drawing.Point(177, 243);
+            this.ant7.Location = new System.Drawing.Point(270, 316);
             this.ant7.Name = "ant7";
-            this.ant7.Size = new System.Drawing.Size(133, 20);
+            this.ant7.Size = new System.Drawing.Size(150, 24);
             this.ant7.TabIndex = 11;
             this.ant7.Text = "ant7: 00.00.00.00";
             // 
@@ -210,21 +221,21 @@
             // 
             this.ant3.AutoSize = true;
             this.ant3.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ant3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ant3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ant3.ForeColor = System.Drawing.Color.Silver;
-            this.ant3.Location = new System.Drawing.Point(19, 243);
+            this.ant3.Location = new System.Drawing.Point(54, 316);
             this.ant3.Name = "ant3";
-            this.ant3.Size = new System.Drawing.Size(133, 20);
+            this.ant3.Size = new System.Drawing.Size(150, 24);
             this.ant3.TabIndex = 10;
             this.ant3.Text = "ant3: 00.00.00.00";
             // 
             // switchRate
             // 
             this.switchRate.AutoSize = true;
-            this.switchRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.switchRate.Location = new System.Drawing.Point(101, 313);
+            this.switchRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.switchRate.Location = new System.Drawing.Point(173, 395);
             this.switchRate.Name = "switchRate";
-            this.switchRate.Size = new System.Drawing.Size(112, 16);
+            this.switchRate.Size = new System.Drawing.Size(130, 18);
             this.switchRate.TabIndex = 14;
             this.switchRate.Text = "switch rate (ms): 0";
             // 
@@ -233,107 +244,13 @@
             this.start.BackColor = System.Drawing.Color.White;
             this.start.Enabled = false;
             this.start.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.start.Location = new System.Drawing.Point(96, 356);
+            this.start.Location = new System.Drawing.Point(174, 457);
             this.start.Name = "start";
             this.start.Size = new System.Drawing.Size(128, 51);
             this.start.TabIndex = 30;
             this.start.Text = "Start";
             this.start.UseVisualStyleBackColor = false;
             this.start.Click += new System.EventHandler(this.start_Click);
-            // 
-            // reset
-            // 
-            this.reset.Enabled = false;
-            this.reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reset.Location = new System.Drawing.Point(715, 410);
-            this.reset.Name = "reset";
-            this.reset.Size = new System.Drawing.Size(83, 39);
-            this.reset.TabIndex = 16;
-            this.reset.Text = "Reset";
-            this.reset.UseVisualStyleBackColor = true;
-            this.reset.Click += new System.EventHandler(this.reset_Click);
-            // 
-            // performance
-            // 
-            this.performance.AutoSize = true;
-            this.performance.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.performance.Location = new System.Drawing.Point(334, 317);
-            this.performance.Name = "performance";
-            this.performance.Size = new System.Drawing.Size(92, 18);
-            this.performance.TabIndex = 17;
-            this.performance.Text = "performance";
-            // 
-            // readCount
-            // 
-            this.readCount.AutoSize = true;
-            this.readCount.Location = new System.Drawing.Point(334, 345);
-            this.readCount.Name = "readCount";
-            this.readCount.Size = new System.Drawing.Size(98, 13);
-            this.readCount.TabIndex = 18;
-            this.readCount.Text = "Tag Read Count: 0";
-            // 
-            // addDB
-            // 
-            this.addDB.AutoSize = true;
-            this.addDB.Location = new System.Drawing.Point(334, 366);
-            this.addDB.Name = "addDB";
-            this.addDB.Size = new System.Drawing.Size(102, 13);
-            this.addDB.TabIndex = 19;
-            this.addDB.Text = "Tag Added In DB: 0";
-            // 
-            // addFile
-            // 
-            this.addFile.AutoSize = true;
-            this.addFile.Location = new System.Drawing.Point(334, 386);
-            this.addFile.Name = "addFile";
-            this.addFile.Size = new System.Drawing.Size(103, 13);
-            this.addFile.TabIndex = 20;
-            this.addFile.Text = "Tag Added In File: 0";
-            // 
-            // addServer
-            // 
-            this.addServer.AutoSize = true;
-            this.addServer.Location = new System.Drawing.Point(334, 406);
-            this.addServer.Name = "addServer";
-            this.addServer.Size = new System.Drawing.Size(118, 13);
-            this.addServer.TabIndex = 21;
-            this.addServer.Text = "Tag Added In Server: 0";
-            // 
-            // serverStatus
-            // 
-            this.serverStatus.AutoSize = true;
-            this.serverStatus.Location = new System.Drawing.Point(529, 406);
-            this.serverStatus.Name = "serverStatus";
-            this.serverStatus.Size = new System.Drawing.Size(74, 13);
-            this.serverStatus.TabIndex = 25;
-            this.serverStatus.Text = "Server Status:";
-            // 
-            // fileStatus
-            // 
-            this.fileStatus.AutoSize = true;
-            this.fileStatus.Location = new System.Drawing.Point(529, 386);
-            this.fileStatus.Name = "fileStatus";
-            this.fileStatus.Size = new System.Drawing.Size(59, 13);
-            this.fileStatus.TabIndex = 24;
-            this.fileStatus.Text = "File Status:";
-            // 
-            // dbStatus
-            // 
-            this.dbStatus.AutoSize = true;
-            this.dbStatus.Location = new System.Drawing.Point(529, 366);
-            this.dbStatus.Name = "dbStatus";
-            this.dbStatus.Size = new System.Drawing.Size(58, 13);
-            this.dbStatus.TabIndex = 23;
-            this.dbStatus.Text = "DB Status:";
-            // 
-            // deviceStatus
-            // 
-            this.deviceStatus.AutoSize = true;
-            this.deviceStatus.Location = new System.Drawing.Point(529, 345);
-            this.deviceStatus.Name = "deviceStatus";
-            this.deviceStatus.Size = new System.Drawing.Size(77, 13);
-            this.deviceStatus.TabIndex = 22;
-            this.deviceStatus.Text = "Device Status:";
             // 
             // menuStrip1
             // 
@@ -342,7 +259,7 @@
             this.optionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1370, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -361,25 +278,25 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // pushToolStripMenuItem
             // 
             this.pushToolStripMenuItem.Name = "pushToolStripMenuItem";
-            this.pushToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pushToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pushToolStripMenuItem.Text = "Push";
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearToolStripMenuItem.Text = "Clear Database";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // optionToolStripMenuItem
@@ -398,7 +315,7 @@
             this.soundToolStripMenuItem,
             this.lightToolStripMenuItem});
             this.enableToolStripMenuItem.Name = "enableToolStripMenuItem";
-            this.enableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enableToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.enableToolStripMenuItem.Text = "Enable";
             // 
             // soundToolStripMenuItem
@@ -416,13 +333,13 @@
             // testSystemToolStripMenuItem
             // 
             this.testSystemToolStripMenuItem.Name = "testSystemToolStripMenuItem";
-            this.testSystemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testSystemToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.testSystemToolStripMenuItem.Text = "Test System";
             // 
             // port4
             // 
             this.port4.AutoSize = true;
-            this.port4.Location = new System.Drawing.Point(62, 36);
+            this.port4.Location = new System.Drawing.Point(151, 30);
             this.port4.Name = "port4";
             this.port4.Size = new System.Drawing.Size(52, 17);
             this.port4.TabIndex = 29;
@@ -433,7 +350,7 @@
             // port8
             // 
             this.port8.AutoSize = true;
-            this.port8.Location = new System.Drawing.Point(173, 36);
+            this.port8.Location = new System.Drawing.Point(274, 30);
             this.port8.Name = "port8";
             this.port8.Size = new System.Drawing.Size(52, 17);
             this.port8.TabIndex = 28;
@@ -441,89 +358,255 @@
             this.port8.Text = "8 port";
             this.port8.UseVisualStyleBackColor = true;
             // 
-            // status1
+            // tableLayoutPanel1
             // 
-            this.status1.AutoSize = true;
-            this.status1.ForeColor = System.Drawing.Color.Red;
-            this.status1.Location = new System.Drawing.Point(613, 345);
-            this.status1.Name = "status1";
-            this.status1.Size = new System.Drawing.Size(73, 13);
-            this.status1.TabIndex = 31;
-            this.status1.Text = "Disconnected";
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1370, 749);
+            this.tableLayoutPanel1.TabIndex = 35;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.dataGridView1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panel3, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(479, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(891, 749);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.connectLAN);
+            this.panel1.Controls.Add(this.pointList);
+            this.panel1.Controls.Add(this.checkPoint);
+            this.panel1.Controls.Add(this.ant1);
+            this.panel1.Controls.Add(this.port8);
+            this.panel1.Controls.Add(this.ant5);
+            this.panel1.Controls.Add(this.port4);
+            this.panel1.Controls.Add(this.ant2);
+            this.panel1.Controls.Add(this.ant6);
+            this.panel1.Controls.Add(this.ant3);
+            this.panel1.Controls.Add(this.ant7);
+            this.panel1.Controls.Add(this.ant4);
+            this.panel1.Controls.Add(this.ant8);
+            this.panel1.Controls.Add(this.switchRate);
+            this.panel1.Controls.Add(this.start);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 29);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(479, 720);
+            this.panel1.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.status2);
+            this.panel3.Controls.Add(this.reset);
+            this.panel3.Controls.Add(this.status3);
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Controls.Add(this.status4);
+            this.panel3.Controls.Add(this.label5);
+            this.panel3.Controls.Add(this.status1);
+            this.panel3.Controls.Add(this.label7);
+            this.panel3.Controls.Add(this.label8);
+            this.panel3.Controls.Add(this.label9);
+            this.panel3.Controls.Add(this.label10);
+            this.panel3.Controls.Add(this.label11);
+            this.panel3.Controls.Add(this.label12);
+            this.panel3.Controls.Add(this.label13);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 524);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(891, 225);
+            this.panel3.TabIndex = 1;
             // 
             // status2
             // 
             this.status2.AutoSize = true;
+            this.status2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.status2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.status2.Location = new System.Drawing.Point(613, 366);
+            this.status2.Location = new System.Drawing.Point(550, 94);
             this.status2.Name = "status2";
-            this.status2.Size = new System.Drawing.Size(59, 13);
-            this.status2.TabIndex = 32;
+            this.status2.Size = new System.Drawing.Size(80, 18);
+            this.status2.TabIndex = 34;
             this.status2.Text = "Connected";
             // 
-            // status4
+            // reset
             // 
-            this.status4.AutoSize = true;
-            this.status4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.status4.Location = new System.Drawing.Point(613, 406);
-            this.status4.Name = "status4";
-            this.status4.Size = new System.Drawing.Size(59, 13);
-            this.status4.TabIndex = 33;
-            this.status4.Text = "Connected";
+            this.reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.reset.Enabled = false;
+            this.reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reset.Location = new System.Drawing.Point(768, 158);
+            this.reset.Name = "reset";
+            this.reset.Size = new System.Drawing.Size(111, 55);
+            this.reset.TabIndex = 16;
+            this.reset.Text = "Reset";
+            this.reset.UseVisualStyleBackColor = true;
+            this.reset.Click += new System.EventHandler(this.reset_Click);
             // 
             // status3
             // 
             this.status3.AutoSize = true;
+            this.status3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.status3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.status3.Location = new System.Drawing.Point(613, 386);
+            this.status3.Location = new System.Drawing.Point(550, 128);
             this.status3.Name = "status3";
-            this.status3.Size = new System.Drawing.Size(59, 13);
-            this.status3.TabIndex = 34;
+            this.status3.Size = new System.Drawing.Size(80, 18);
+            this.status3.TabIndex = 33;
             this.status3.Text = "Connected";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(55, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(117, 24);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "performance";
+            // 
+            // status4
+            // 
+            this.status4.AutoSize = true;
+            this.status4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.status4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.status4.Location = new System.Drawing.Point(550, 162);
+            this.status4.Name = "status4";
+            this.status4.Size = new System.Drawing.Size(80, 18);
+            this.status4.TabIndex = 32;
+            this.status4.Text = "Connected";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label5.Location = new System.Drawing.Point(116, 60);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(132, 18);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "Tag Read Count: 0";
+            // 
+            // status1
+            // 
+            this.status1.AutoSize = true;
+            this.status1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.status1.ForeColor = System.Drawing.Color.Red;
+            this.status1.Location = new System.Drawing.Point(550, 60);
+            this.status1.Name = "status1";
+            this.status1.Size = new System.Drawing.Size(99, 18);
+            this.status1.TabIndex = 31;
+            this.status1.Text = "Disconnected";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label7.Location = new System.Drawing.Point(116, 94);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(134, 18);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "Tag Added In DB: 0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label8.Location = new System.Drawing.Point(426, 162);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(101, 18);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "Server Status:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label9.Location = new System.Drawing.Point(116, 162);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(136, 18);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "Tag Added In File: 0";
+            this.label9.Click += new System.EventHandler(this.label9_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label10.Location = new System.Drawing.Point(426, 128);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(81, 18);
+            this.label10.TabIndex = 24;
+            this.label10.Text = "File Status:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label11.Location = new System.Drawing.Point(116, 128);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(156, 18);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "Tag Added In Server: 0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label12.Location = new System.Drawing.Point(426, 94);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(79, 18);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "DB Status:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label13.Location = new System.Drawing.Point(426, 60);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(103, 18);
+            this.label13.TabIndex = 22;
+            this.label13.Text = "Device Status:";
             // 
             // Form2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.status3);
-            this.Controls.Add(this.status4);
-            this.Controls.Add(this.status2);
-            this.Controls.Add(this.status1);
-            this.Controls.Add(this.port8);
-            this.Controls.Add(this.port4);
-            this.Controls.Add(this.serverStatus);
-            this.Controls.Add(this.fileStatus);
-            this.Controls.Add(this.dbStatus);
-            this.Controls.Add(this.deviceStatus);
-            this.Controls.Add(this.addServer);
-            this.Controls.Add(this.addFile);
-            this.Controls.Add(this.addDB);
-            this.Controls.Add(this.readCount);
-            this.Controls.Add(this.performance);
-            this.Controls.Add(this.reset);
-            this.Controls.Add(this.start);
-            this.Controls.Add(this.switchRate);
-            this.Controls.Add(this.ant8);
-            this.Controls.Add(this.ant4);
-            this.Controls.Add(this.ant7);
-            this.Controls.Add(this.ant3);
-            this.Controls.Add(this.ant6);
-            this.Controls.Add(this.ant2);
-            this.Controls.Add(this.ant5);
-            this.Controls.Add(this.ant1);
-            this.Controls.Add(this.checkPoint);
-            this.Controls.Add(this.pointList);
-            this.Controls.Add(this.connectLAN);
-            this.Controls.Add(this.dataGridView1);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form2";
             this.Text = "Form2";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -545,16 +628,6 @@
         private System.Windows.Forms.Label ant3;
         private System.Windows.Forms.Label switchRate;
         private System.Windows.Forms.Button start;
-        private System.Windows.Forms.Button reset;
-        private System.Windows.Forms.Label performance;
-        private System.Windows.Forms.Label readCount;
-        private System.Windows.Forms.Label addDB;
-        private System.Windows.Forms.Label addFile;
-        private System.Windows.Forms.Label addServer;
-        private System.Windows.Forms.Label serverStatus;
-        private System.Windows.Forms.Label fileStatus;
-        private System.Windows.Forms.Label dbStatus;
-        private System.Windows.Forms.Label deviceStatus;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionToolStripMenuItem;
@@ -568,9 +641,23 @@
         private System.Windows.Forms.ToolStripMenuItem testSystemToolStripMenuItem;
         private System.Windows.Forms.RadioButton port4;
         private System.Windows.Forms.RadioButton port8;
-        private System.Windows.Forms.Label status1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label status2;
-        private System.Windows.Forms.Label status4;
+        private System.Windows.Forms.Button reset;
         private System.Windows.Forms.Label status3;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label status4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label status1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
     }
 }
