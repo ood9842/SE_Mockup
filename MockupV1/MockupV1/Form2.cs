@@ -17,6 +17,10 @@ namespace MockupV1
         private static ConnectDatabase databasecmd;
         private bool isStart = false;
         private bool isReset = false;
+        private int readCount = 0;
+        private int addDataCount = 0;
+        private int addServerCount = 0;
+        private int addFileCount = 0;
 
         public Form2()
         {
@@ -95,7 +99,7 @@ namespace MockupV1
         {
             if(!port4.Checked && !port8.Checked)
             {
-                MessageBox.Show("Please slect port anable");
+                MessageBox.Show("Please Select Port Enable");
             }
             else if (port4.Checked)
             {
@@ -105,6 +109,13 @@ namespace MockupV1
                 ant2.ForeColor = Color.Green;
                 ant3.ForeColor = Color.Green;
                 ant4.ForeColor = Color.Green;
+                port4.Enabled = false;
+                port8.Enabled = false;
+                connectLAN.Enabled = false;
+                pointList.Enabled = false;
+                start.Enabled = true;
+                status1.ForeColor = Color.LimeGreen;
+                status1.Text = "Connected";
             }
             else
             {
@@ -118,12 +129,15 @@ namespace MockupV1
                 ant6.ForeColor = Color.Green;
                 ant7.ForeColor = Color.Green;
                 ant8.ForeColor = Color.Green;
+                port4.Enabled = false;
+                port8.Enabled = false;
+                connectLAN.Enabled = false;
+                pointList.Enabled = false;
+                start.Enabled = true;
+                status1.ForeColor = Color.LimeGreen;
+                status1.Text = "Connected";
             }
-            start.Enabled = true;
-            pointList.Enabled = false;
-            port4.Enabled = false;
-            port8.Enabled = false;
-            connectLAN.Enabled = false;
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -138,6 +152,7 @@ namespace MockupV1
             {
                 reset.Enabled = false;
                 start.BackColor = Color.Red;
+                start.ForeColor = Color.White;
                 start.Text = "Stop";
                 //updateDataGridView();
                 //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 1";
@@ -177,6 +192,7 @@ namespace MockupV1
             {
                 reset.Enabled = true;
                 start.BackColor = Color.White;
+                start.ForeColor = Color.Black;
                 start.Text = "Start";
             }
         }
@@ -207,9 +223,5 @@ namespace MockupV1
 
         }
 
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -34,7 +34,7 @@ namespace MockupV1
         public void connectDB()
         {
             Instance.connection.Open();
-            Console.WriteLine("connect complete");
+            Console.WriteLine("Connect Complete");
         }
     }
 }

@@ -27,3 +27,17 @@ D:\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Web.xml
 C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Data.xml
 C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Web.xml
 C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.CopyComplete
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\bin\Debug\MockupV1.exe.config
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\bin\Debug\MockupV1.exe
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\bin\Debug\MockupV1.pdb
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Data.xml
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Web.xml
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csprojResolveAssemblyReference.cache
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.Form1.resources
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.Form2.resources
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.Properties.Resources.resources
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.GenerateResource.cache
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.CoreCompileInputs.cache
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.CopyComplete
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.exe
+C:\Users\Tata CMU\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.pdb
