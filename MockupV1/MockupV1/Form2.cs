@@ -17,6 +17,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MockupV1
 {
+    public delegate void SendDataCallback(byte[] btArySendData);
     public partial class Form2 : Form
     {
         private static ConnectDatabase databasecmd;
@@ -28,6 +29,18 @@ namespace MockupV1
         private int addFileCount = 0;
         private SerialPort iSerialPort;
         private int m_nType = -1;
+
+        private ReaderSetting m_curSetting = new ReaderSetting();
+        private byte btPacketType;
+        private byte btDataLen;
+        private byte btReadId;
+        private byte btCmd;
+        private byte[] btAryData;
+        private byte btCheck;
+        private byte[] btAryTranData;
+
+
+        public SendDataCallback SendCallback;
 
 
 
@@ -427,7 +440,124 @@ namespace MockupV1
             return 0;
         }
 
-        
+        private void soundToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            byte btBeeperMode = 0xFF;
+            //if (soundToolStripMenuItem.CheckState===false){
+            if (!soundToolStripMenuItem.Checked)
+            {
+
+                btBeeperMode = 0x02;
+                soundToolStripMenuItem.Checked = true;
+                //CheckOnClick;
+                //btBeeperMode = 0x00;
+            }
+            else
+            {
+                btBeeperMode = 0x00;
+                soundToolStripMenuItem.Checked = false;
+               // soundToolStripMenuItem.Font = Color.Red;
+                //soundToolStripMenuItem.CheckOnClick = true;
+
+                //btBeeperMode = 0x02;
+            }
+            SetBeeperMode(m_curSetting.btReadId, btBeeperMode);
+            m_curSetting.btBeeperMode = btBeeperMode;
+        }
+
+        public int SetBeeperMode(byte btReadId, byte btMode)
+        {
+            byte btCmd = 0x7A;
+            byte[] btAryData = new byte[1];
+            btAryData[0] = btMode;
+
+            int nResult = SendMessage(btReadId, btCmd, btAryData);
+
+            return nResult;
+        }
+        private int SendMessage(byte btReadId, byte btCmd, byte[] btAryData)
+        {
+            int nLen = btAryData.Length;
+
+            this.btPacketType = 0xA0;
+            this.btDataLen = Convert.ToByte(nLen + 3);
+            this.btReadId = btReadId;
+            this.btCmd = btCmd;
+
+            this.btAryData = new byte[nLen];
+            btAryData.CopyTo(this.btAryData, 0);
+
+            this.btAryTranData = new byte[nLen + 5];
+            this.btAryTranData[0] = this.btPacketType;
+            this.btAryTranData[1] = this.btDataLen;
+            this.btAryTranData[2] = this.btReadId;
+            this.btAryTranData[3] = this.btCmd;
+            this.btAryData.CopyTo(this.btAryTranData, 4);
+
+            this.btCheck = CheckSum(this.btAryTranData, 0, nLen + 4);
+            this.btAryTranData[nLen + 4] = this.btCheck;
+
+            return SendMessage(AryTranData);
+        }
+        public byte[] AryTranData
+        {
+            get
+            {
+                return btAryTranData;
+            }
+        }
+        public byte CheckSum(byte[] btAryBuffer, int nStartPos, int nLen)
+        {
+            byte btSum = 0x00;
+
+            for (int nloop = nStartPos; nloop < nStartPos + nLen; nloop++)
+            {
+                btSum += btAryBuffer[nloop];
+            }
+
+            return Convert.ToByte(((~btSum) + 1) & 0xFF);
+        }
+        public int SendMessage(byte[] btArySenderData)
+        {
+            //Serial Connection
+            if (m_nType == 0)
+            {
+                if (!iSerialPort.IsOpen)
+                {
+                    return -1;
+                }
+
+                iSerialPort.Write(btArySenderData, 0, btArySenderData.Length);
+
+                if (SendCallback != null)
+                {
+                    SendCallback(btArySenderData);
+                }
+
+                return 0;
+            }
+            //Tcp Connection
+            /*
+            else if (m_nType == 1)
+            {
+                if (!italker.IsConnect())
+                {
+                    return -1;
+                }
+
+                if (italker.SendMessage(btArySenderData))
+                {
+                    if (SendCallback != null)
+                    {
+                        SendCallback(btArySenderData);
+                    }
+
+                    return 0;
+                }
+            }
+            */
+            return -1;
+        }
     }
 
 }
