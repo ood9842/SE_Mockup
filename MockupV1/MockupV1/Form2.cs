@@ -29,6 +29,9 @@ namespace MockupV1
         private int addFileCount = 0;
         private SerialPort iSerialPort;
         private int m_nType = -1;
+        private int countDB = 0;
+        private string epcS;
+        private string timeS;
 
         private ReaderSetting m_curSetting = new ReaderSetting();
         private byte btPacketType;
@@ -53,16 +56,35 @@ namespace MockupV1
         {
             InitializeComponent();
 
-            string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
+            //string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
 
-            updateDataGridView("010131353513513513",time,1);
+            //updateDataGridView("010131353513513513",time,1);
             databasecmd = new ConnectDatabase();
         }
 
         public void updateDataGridView(string data,string time,int ant)
         {
-            dataGridView1.Rows.Add(data, time, ant);
+            try
+            {
+                if (data.Equals(null) || data == "") return;
+                dataGridView1.Invoke(new Action(() => { dataGridView1.Rows.Insert(0,data, time, ant);}));
+                countDB++;
+                rc.Invoke(new Action(() => { rc.Text = "" + countDB; }));
+                sendLocal();
+            }
+
+            catch (InvalidOperationException exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
+
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+                        
         }
+
 
         private void sendFile()
         {
@@ -124,23 +146,16 @@ namespace MockupV1
             }
             try
             {
-                for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
-                {
-                    string StrQuery = @"INSERT INTO checkpoint (epc,time,ant_id) VALUES ("
-                        + dataGridView1.Rows[i].Cells["epc"].Value + ",\""
+                int i = 0;
+                    string StrQuery = @"INSERT IGNORE INTO checkpoint (epc,time,ant_id) VALUES ("
+                     + "\"" + dataGridView1.Rows[i].Cells["epc"].Value + "\",\""
                         + dataGridView1.Rows[i].Cells["time"].Value + "\","
                         + dataGridView1.Rows[i].Cells["ant"].Value + ");";
                     //Console.WriteLine(dataGridView1.Rows.Count);
                     databasecmd.cmd.CommandText = StrQuery;
                     Console.WriteLine(StrQuery);
                     databasecmd.cmd.ExecuteNonQuery();
-                }
-                //using (MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT epc,time,ant_id FROM checkpoint", databasecmd.connection))
-                //{
-                //    DataSet ds = new DataSet();
-                //    adapter.Fill(ds);
-                //    dataGridView1.DataSource = ds.Tables[0];
-                //}
+
 
             }
             catch (Exception)
@@ -186,6 +201,7 @@ namespace MockupV1
             iSerialPort = new SerialPort();
 
             iSerialPort.DataReceived += new SerialDataReceivedEventHandler(ReceivedComData);
+            //updateDataGridView(epcS,timeS,0);
         }
 
         private void resetAnt()
@@ -206,8 +222,9 @@ namespace MockupV1
             string strComPort = comPort.Text;
             int nBaudrate = Convert.ToInt32(comBaudrate.Text);
 
-            sendLocal();
-            sendFile();
+            //sendLocal();
+            //sendFile();
+            reset.Enabled = true;
 
             int nRet = OpenCom(strComPort, nBaudrate, out strException);
 
@@ -347,6 +364,30 @@ namespace MockupV1
                 reset.Enabled = false;
                 dataGridView1.DataSource = new DataGridView();
                 resetAnt();
+
+                if (databasecmd.connection.State == ConnectionState.Closed)
+                {
+                    databasecmd.connectDB();
+
+                }
+                try
+                {
+                    string StrQuery = @"TRUNCATE TABLE checkpoint;";
+                    databasecmd.cmd.CommandText = StrQuery;
+                    Console.WriteLine(StrQuery);
+                    databasecmd.cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    if (databasecmd.connection.State == ConnectionState.Open)
+                    {
+                        databasecmd.connection.Close();
+                    }
+                }
             }
         }
 
@@ -380,10 +421,11 @@ namespace MockupV1
                 byte[] btAryBuffer = new byte[nCount];
                 iSerialPort.Read(btAryBuffer, 0, nCount);
 
-                string time = DateTime.Now.ToString("hh-mm-ss-ffffff hh:mm:ss:ffffff");
-                //string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
-
-                updateDataGridView(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length),time,0);
+                //string time = DateTime.Now.ToString("hh-mm-ss-ffffff hh:mm:ss:ffffff");
+                string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
+                //timeS = time;
+                //epcS = ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length);
+                updateDataGridView(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length), time, 0);
                 Console.Write(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length));
                 Console.WriteLine("");
                 //RunReceiveDataCallback(btAryBuffer);

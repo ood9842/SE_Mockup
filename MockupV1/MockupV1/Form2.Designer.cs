@@ -318,26 +318,26 @@
             this.soundToolStripMenuItem,
             this.lightToolStripMenuItem});
             this.enableToolStripMenuItem.Name = "enableToolStripMenuItem";
-            this.enableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enableToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.enableToolStripMenuItem.Text = "Enable";
             // 
             // soundToolStripMenuItem
             // 
             this.soundToolStripMenuItem.Name = "soundToolStripMenuItem";
-            this.soundToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.soundToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.soundToolStripMenuItem.Text = "Sound";
             this.soundToolStripMenuItem.Click += new System.EventHandler(this.soundToolStripMenuItem_Click);
             // 
             // lightToolStripMenuItem
             // 
             this.lightToolStripMenuItem.Name = "lightToolStripMenuItem";
-            this.lightToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lightToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.lightToolStripMenuItem.Text = "Light";
             // 
             // testSystemToolStripMenuItem
             // 
             this.testSystemToolStripMenuItem.Name = "testSystemToolStripMenuItem";
-            this.testSystemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testSystemToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.testSystemToolStripMenuItem.Text = "Test System";
             // 
             // port4
