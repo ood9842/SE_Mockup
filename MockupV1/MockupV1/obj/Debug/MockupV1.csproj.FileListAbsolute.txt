@@ -55,3 +55,4 @@ C:\Users\natthaphon\source\repos\RFID\SE_Mockup-master\MockupV1\MockupV1\obj\Deb
 C:\Users\natthaphon\source\repos\RFID\SE_Mockup-master\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.CopyComplete
 C:\Users\natthaphon\source\repos\RFID\SE_Mockup-master\MockupV1\MockupV1\obj\Debug\MockupV1.exe
 C:\Users\natthaphon\source\repos\RFID\SE_Mockup-master\MockupV1\MockupV1\obj\Debug\MockupV1.pdb
+D:\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.ResolveComReference.cache

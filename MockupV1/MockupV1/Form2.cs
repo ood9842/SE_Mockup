@@ -13,6 +13,7 @@ using System.IO.Ports;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MockupV1
 {
@@ -38,38 +39,108 @@ namespace MockupV1
         public Form2()
         {
             InitializeComponent();
+
+            string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
+
+            updateDataGridView("010131353513513513",time,1);
             databasecmd = new ConnectDatabase();
         }
 
-        public void updateDataGridView()
+        public void updateDataGridView(string data,string time,int ant)
         {
-            if(databasecmd.connection.State == ConnectionState.Closed)
+            dataGridView1.Rows.Add(data, time, ant);
+        }
+
+        private void sendFile()
+        {
+            Excel.Application xlApp;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+
+            xlApp = new Excel.Application();
+            xlWorkBook = xlApp.Workbooks.Add(misValue);
+            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+            int i = 0;
+            int j = 0;
+
+            for (i = 0; i <= dataGridView1.RowCount - 1; i++)
+            {
+                for (j = 0; j <= dataGridView1.ColumnCount - 1; j++)
+                {
+                    DataGridViewCell cell = dataGridView1[j, i];
+                    xlWorkSheet.Cells[i + 1, j + 1] = cell.Value;
+                }
+            }
+
+            xlWorkBook.SaveAs("d:\\testfile.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            xlWorkBook.Close(true, misValue, misValue);
+            xlApp.Quit();
+
+            releaseObject(xlWorkSheet);
+            releaseObject(xlWorkBook);
+            releaseObject(xlApp);
+
+            //MessageBox.Show("Excel file created , you can find the file c:\\csharp.net-informations.xls");
+        }
+
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+
+        private void sendLocal()
+        {
+            if (databasecmd.connection.State == ConnectionState.Closed)
             {
                 databasecmd.connectDB();
 
             }
             try
             {
+                for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
+                {
+                    string StrQuery = @"INSERT INTO checkpoint (epc,time,ant_id) VALUES ("
+                        + dataGridView1.Rows[i].Cells["epc"].Value + ",\""
+                        + dataGridView1.Rows[i].Cells["time"].Value + "\","
+                        + dataGridView1.Rows[i].Cells["ant"].Value + ");";
+                    //Console.WriteLine(dataGridView1.Rows.Count);
+                    databasecmd.cmd.CommandText = StrQuery;
+                    Console.WriteLine(StrQuery);
+                    databasecmd.cmd.ExecuteNonQuery();
+                }
                 //using (MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT epc,time,ant_id FROM checkpoint", databasecmd.connection))
-                using (MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT epc,time,ant_id FROM checkpoint",databasecmd.connection))
-                {
-                    DataSet ds = new DataSet();
-                    adapter.Fill(ds);
-                    dataGridView1.DataSource = ds.Tables[0];
-                }
+                //{
+                //    DataSet ds = new DataSet();
+                //    adapter.Fill(ds);
+                //    dataGridView1.DataSource = ds.Tables[0];
+                //}
 
-                }
-                catch (Exception)
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (databasecmd.connection.State == ConnectionState.Open)
                 {
-                    throw;
+                    databasecmd.connection.Close();
                 }
-                finally
-                {
-                    if (databasecmd.connection.State == ConnectionState.Open)
-                    {
-                        databasecmd.connection.Clone();
-                    }
-                }
+            }
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -118,10 +189,12 @@ namespace MockupV1
 
         private void connectLAN_Click(object sender, EventArgs e)
         {
-
             string strException = string.Empty;
             string strComPort = comPort.Text;
             int nBaudrate = Convert.ToInt32(comBaudrate.Text);
+
+            sendLocal();
+            sendFile();
 
             int nRet = OpenCom(strComPort, nBaudrate, out strException);
 
@@ -200,6 +273,7 @@ namespace MockupV1
 
         private void start_Click(object sender, EventArgs e)
         {
+
             isStart = !isStart;
             if(isStart)
             {
@@ -292,7 +366,11 @@ namespace MockupV1
 
                 byte[] btAryBuffer = new byte[nCount];
                 iSerialPort.Read(btAryBuffer, 0, nCount);
-                
+
+                string time = DateTime.Now.ToString("hh-mm-ss-ffffff hh:mm:ss:ffffff");
+                //string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
+
+                updateDataGridView(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length),time,0);
                 Console.Write(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length));
                 Console.WriteLine("");
                 //RunReceiveDataCallback(btAryBuffer);
