@@ -33,6 +33,7 @@ namespace MockupV1
         private string checkP;
 
         StringBuilder sb = new StringBuilder();
+        List<Data> data = new List<Data>();
 
         private ReaderSetting m_curSetting = new ReaderSetting();
         private byte btPacketType;
@@ -60,7 +61,7 @@ namespace MockupV1
             table = new DataTable();
             table.Columns.Add(new DataColumn("epc", typeof(string)));
             table.Columns.Add(new DataColumn("time", typeof(string)));
-            table.Columns.Add(new DataColumn("and", typeof(string)));
+            table.Columns.Add(new DataColumn("ant", typeof(string)));
             dataGridView1.DataSource = table;
             var headers = dataGridView1.Columns.Cast<DataGridViewColumn>();
             sb.AppendLine(string.Join(",", headers.Select(column => "\"" + column.HeaderText + "\"").ToArray()) + ",\"" + "point" + "\"");
@@ -72,15 +73,30 @@ namespace MockupV1
         {
             try
             {
+                DataRow r;
                 if (data.Equals(null) || data == "") return;
                 if (isReset) return;
-                //dataGridView1.Invoke(new Action(() => { dataGridView1.Rows.Insert(0, data, time, ant); }));
-                dataGridView1.Rows.Insert(0, data, time, ant);
+                //dataGridView1.Invoke(new Action(() =>
+                //{
+                //    r = table.NewRow();
+                //    r["epc"] = data;
+                //    r["time"] = time;
+                //    r["ant"] = ant;
+                //    table.Rows.InsertAt(r, 0);
+                //}));
+                
+                r = table.NewRow();
+                r["epc"] = data;
+                r["time"] = time;
+                r["ant"] = ant;
+                table.Rows.InsertAt(r,0);
+
                 countDB++;
                 //rc.Invoke(new Action(() => { rc.Text = "" + countDB; }));
                 rc.Text = "" + countDB;
                 sendLocal();
                 sendFile();
+                sendServer();
             }
 
             catch (InvalidOperationException exc)
@@ -168,6 +184,45 @@ namespace MockupV1
             }
         }
 
+        private void sendServer()
+        {
+
+            data.Add(new Data() { epc = "" + dataGridView1.Rows[0].Cells["epc"].Value, time = "" + dataGridView1.Rows[0].Cells["time"].Value, ant = "" + dataGridView1.Rows[0].Cells["ant"].Value, point = "" + checkP });
+
+
+
+            string jsonString = data.ToJSON();
+
+            Console.WriteLine(jsonString);
+
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.0.109/api/add.php");
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                //string loginjson = new JavaScriptSerializer().Serialize(new
+                //{
+                //    userid = username.Text,
+                //    password = pass.Text
+                //});
+
+                streamWriter.Write(jsonString);
+                streamWriter.Flush();
+                streamWriter.Close();
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    Console.WriteLine(result);
+                    //pass.Text = result.ToString();
+                }
+            }
+        }
+
         private void Form2_Load(object sender, EventArgs e)
         {
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -228,7 +283,7 @@ namespace MockupV1
             int nBaudrate = Convert.ToInt32(comBaudrate.Text);
 
 
-            string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
+            string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
 
             updateDataGridView("010131353513513513", time, 1);
             //sendLocal();
@@ -335,30 +390,7 @@ namespace MockupV1
                 //        ant1.Text = "ant1 : " + reader.GetString(0);
                 //    }
                 //}
-                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 2";
-                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-                //{
-                //    if (reader.Read())
-                //    {
-                //        ant2.Text = "ant2 : " + reader.GetString(0);
-                //    }
-                //}
-                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 3";
-                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-                //{
-                //    if (reader.Read())
-                //    {
-                //        ant3.Text = "ant3 : " + reader.GetString(0);
-                //    }
-                //}
-                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 4";
-                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-                //{
-                //    if (reader.Read())
-                //    {
-                //        ant4.Text = "ant4 : " + reader.GetString(0);
-                //    }
-                //}
+
             }
             else
             {
@@ -388,6 +420,7 @@ namespace MockupV1
                 connectLAN.Enabled = true;
                 status1.ForeColor = Color.Red;
                 status1.Text = "Disconnected";
+                isReset = !isReset;
 
                 //if (databasecmd.connection.State == ConnectionState.Closed)
                 //{
@@ -445,10 +478,8 @@ namespace MockupV1
                 byte[] btAryBuffer = new byte[nCount];
                 iSerialPort.Read(btAryBuffer, 0, nCount);
 
-                //string time = DateTime.Now.ToString("hh-mm-ss-ffffff hh:mm:ss:ffffff");
-                string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
-                //timeS = time;
-                //epcS = ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length);
+                string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
+
                 updateDataGridView(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length), time, 0);
                 Console.Write(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length));
                 Console.WriteLine("");
