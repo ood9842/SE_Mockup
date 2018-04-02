@@ -253,7 +253,8 @@ namespace MockupV1
                 connectLAN.BackColor = Color.Green;
                   
                 connectLAN.Enabled = false;
-
+                status1.ForeColor = Color.LimeGreen;
+                status1.Text = "Connected";
                 return;
             }
 
@@ -368,6 +369,16 @@ namespace MockupV1
                 reset.Enabled = false;
                 dataGridView1.DataSource = new DataGridView();
                 resetAnt();
+
+                start.Enabled = false;
+
+                comBaudrate.Enabled = true;
+                comPort.Enabled = true;
+                connectLAN.BackColor = Color.White;
+
+                connectLAN.Enabled = false;
+                status1.ForeColor = Color.Black;
+                status1.Text = "Connect";
 
                 //if (databasecmd.connection.State == ConnectionState.Closed)
                 //{
@@ -610,6 +621,8 @@ namespace MockupV1
             checkP = pointList.SelectedItem.ToString();
             //Console.WriteLine(checkP);
         }
+
+       
     }
 
 }

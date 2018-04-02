@@ -573,6 +573,7 @@
             this.status1.Size = new System.Drawing.Size(99, 18);
             this.status1.TabIndex = 31;
             this.status1.Text = "Disconnected";
+            //this.status1.Click += new System.EventHandler(this.status1_Click);
             // 
             // label7
             // 
