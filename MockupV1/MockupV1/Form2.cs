@@ -13,7 +13,8 @@ using System.IO.Ports;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
-using Excel = Microsoft.Office.Interop.Excel;
+//using Excel = Microsoft.Office.Interop.Excel;
+using System.IO;
 
 namespace MockupV1
 {
@@ -21,14 +22,17 @@ namespace MockupV1
     public partial class Form2 : Form
     {
         private static ConnectDatabase databasecmd;
-        private bool isStart = false;
-        private bool isReset = false;
-        private int readCount = 0;
-        private int addDataCount = 0;
-        private int addServerCount = 0;
-        private int addFileCount = 0;
+        private bool isStart = false; //check button
+        private bool isReset = false; //check button
+        private DataTable table; //table in dataGridview
         private SerialPort iSerialPort;
         private int m_nType = -1;
+        private int countDB = 0;
+        private string epcS;
+        private string timeS;
+        private string checkP;
+
+        StringBuilder sb = new StringBuilder();
 
         private ReaderSetting m_curSetting = new ReaderSetting();
         private byte btPacketType;
@@ -38,6 +42,7 @@ namespace MockupV1
         private byte[] btAryData;
         private byte btCheck;
         private byte[] btAryTranData;
+
 
 
         public SendDataCallback SendCallback;
@@ -52,50 +57,79 @@ namespace MockupV1
         public Form2()
         {
             InitializeComponent();
+            table = new DataTable();
+            table.Columns.Add(new DataColumn("epc", typeof(string)));
+            table.Columns.Add(new DataColumn("time", typeof(string)));
+            table.Columns.Add(new DataColumn("ant", typeof(string)));
+            dataGridView1.DataSource = table;
+            var headers = dataGridView1.Columns.Cast<DataGridViewColumn>();
+            sb.AppendLine(string.Join(",", headers.Select(column => "\"" + column.HeaderText + "\"").ToArray()) + ",\"" + "point" + "\"");
 
-            string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
-
-            updateDataGridView("010131353513513513",time,1);
             databasecmd = new ConnectDatabase();
         }
 
         public void updateDataGridView(string data,string time,int ant)
         {
-            dataGridView1.Rows.Add(data, time, ant);
+            try
+            {
+                DataRow r;
+                if (data.Equals(null) || data == "") return;
+                if (isReset) return;
+                //dataGridView1.Invoke(new Action(() =>
+                //{
+                //    r = table.NewRow();
+                //    r["epc"] = data;
+                //    r["time"] = time;
+                //    r["ant"] = ant;
+                //    table.Rows.InsertAt(r, 0);
+                //}));
+                
+                r = table.NewRow();
+                r["epc"] = data;
+                r["time"] = time;
+                r["ant"] = ant;
+                table.Rows.InsertAt(r,0);
+
+                countDB++;
+                //rc.Invoke(new Action(() => { rc.Text = "" + countDB; }));
+                rc.Text = "" + countDB;
+                sendLocal();
+                sendFile();
+                sendServer();
+            }
+
+            catch (InvalidOperationException exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
+
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+                        
         }
+
 
         private void sendFile()
         {
-            Excel.Application xlApp;
-            Excel.Workbook xlWorkBook;
-            Excel.Worksheet xlWorkSheet;
-            object misValue = System.Reflection.Missing.Value;
 
-            xlApp = new Excel.Application();
-            xlWorkBook = xlApp.Workbooks.Add(misValue);
-            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            int i = 0;
-            int j = 0;
-
-            for (i = 0; i <= dataGridView1.RowCount - 1; i++)
+            //foreach (DataGridViewRow row in dataGridView1.Rows)
+            //{
+            //var cells = row.Cells.Cast<DataGridViewCell>();
+            var cells = dataGridView1.Rows[0].Cells.Cast<DataGridViewCell>();
+            sb.AppendLine(string.Join(",", cells.Select(cell => "\"" + cell.Value + "\"").ToArray())+ ",\"" + checkP + "\"");
+            //}
+            //Console.WriteLine(sb);
+            try
             {
-                for (j = 0; j <= dataGridView1.ColumnCount - 1; j++)
-                {
-                    DataGridViewCell cell = dataGridView1[j, i];
-                    xlWorkSheet.Cells[i + 1, j + 1] = cell.Value;
-                }
+                File.WriteAllText("D:\\demo.csv", sb.ToString(), Encoding.UTF8);
             }
-
-            xlWorkBook.SaveAs("d:\\testfile.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
-            xlWorkBook.Close(true, misValue, misValue);
-            xlApp.Quit();
-
-            releaseObject(xlWorkSheet);
-            releaseObject(xlWorkBook);
-            releaseObject(xlApp);
-
-            //MessageBox.Show("Excel file created , you can find the file c:\\csharp.net-informations.xls");
-        }
+            catch (Exception e)
+            {
+                MessageBox.Show("File write error: " + e.Message);
+            }
+}
 
         private void releaseObject(object obj)
         {
@@ -124,23 +158,16 @@ namespace MockupV1
             }
             try
             {
-                for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
-                {
-                    string StrQuery = @"INSERT INTO checkpoint (epc,time,ant_id) VALUES ("
-                        + dataGridView1.Rows[i].Cells["epc"].Value + ",\""
+                int i = 0;
+                    string StrQuery = @"INSERT INTO checkpoint (epc,time,ant_id,point) VALUES ("
+                     + "\"" + dataGridView1.Rows[i].Cells["epc"].Value + "\",\""
                         + dataGridView1.Rows[i].Cells["time"].Value + "\","
-                        + dataGridView1.Rows[i].Cells["ant"].Value + ");";
+                        + dataGridView1.Rows[i].Cells["ant"].Value + ",\""+ checkP + "\""+");";
                     //Console.WriteLine(dataGridView1.Rows.Count);
                     databasecmd.cmd.CommandText = StrQuery;
                     Console.WriteLine(StrQuery);
                     databasecmd.cmd.ExecuteNonQuery();
-                }
-                //using (MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT epc,time,ant_id FROM checkpoint", databasecmd.connection))
-                //{
-                //    DataSet ds = new DataSet();
-                //    adapter.Fill(ds);
-                //    dataGridView1.DataSource = ds.Tables[0];
-                //}
+
 
             }
             catch (Exception)
@@ -156,11 +183,55 @@ namespace MockupV1
             }
         }
 
+        private void sendServer()
+        {
+            List<Data> data = new List<Data>();
+
+            data.Add(new Data() { epc = "" + dataGridView1.Rows[0].Cells["epc"].Value, time = "" + dataGridView1.Rows[0].Cells["time"].Value, ant = "" + dataGridView1.Rows[0].Cells["ant"].Value, point = "" + checkP });
+
+
+
+            string jsonString = data.ToJSON();
+
+            Console.WriteLine(jsonString);
+
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.0.109/api/add.php");
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                //string loginjson = new JavaScriptSerializer().Serialize(new
+                //{
+                //    userid = username.Text,
+                //    password = pass.Text
+                //});
+
+                streamWriter.Write(jsonString);
+                streamWriter.Flush();
+                streamWriter.Close();
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    Console.WriteLine(result);
+                    //pass.Text = result.ToString();
+                }
+            }
+        }
+
         private void Form2_Load(object sender, EventArgs e)
         {
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
-            WindowState = FormWindowState.Maximized;
+            label6.Enabled = false;
+
+            dataGridView1.Columns[0].Width = 400;
+            dataGridView1.Columns[0].Width = 200;
+            dataGridView1.Columns[2].Width = dataGridView1.Width - dataGridView1.Columns[0].Width - dataGridView1.Columns[0].Width;
 
             ant1.ForeColor = Color.Gray;
             ant2.ForeColor = Color.Gray;
@@ -186,6 +257,7 @@ namespace MockupV1
             iSerialPort = new SerialPort();
 
             iSerialPort.DataReceived += new SerialDataReceivedEventHandler(ReceivedComData);
+            //updateDataGridView(epcS,timeS,0);
         }
 
         private void resetAnt()
@@ -202,14 +274,27 @@ namespace MockupV1
 
         private void connectLAN_Click(object sender, EventArgs e)
         {
+            
+            if (pointList.Text == null | pointList.Text == "")
+            {
+                MessageBox.Show("Choose CheckPoint,please");
+                return;
+            }
             string strException = string.Empty;
             string strComPort = comPort.Text;
             int nBaudrate = Convert.ToInt32(comBaudrate.Text);
 
-            sendLocal();
-            sendFile();
+
+            string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
+
+            updateDataGridView("010131353513513513", time, 1);
+            //sendLocal();
+            //sendFile();
+            reset.Enabled = true;
 
             int nRet = OpenCom(strComPort, nBaudrate, out strException);
+
+            if (strComPort == "COM15") nRet=0;//ทดสอบที่com15
 
             if (nRet != 0)
             {
@@ -232,8 +317,11 @@ namespace MockupV1
                 connectLAN.BackColor = Color.Green;
                   
                 connectLAN.Enabled = false;
-
+                status1.ForeColor = Color.LimeGreen;
+                status1.Text = "Connected";
                 return;
+
+                
             }
 
             if (!port4.Checked && !port8.Checked)
@@ -295,6 +383,8 @@ namespace MockupV1
                 start.ForeColor = Color.White;
                 start.Text = "Stop";
                 label6.Enabled = true;
+
+                //ReceivedComData();
                 //updateDataGridView();
                 //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 1";
                 //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
@@ -304,30 +394,7 @@ namespace MockupV1
                 //        ant1.Text = "ant1 : " + reader.GetString(0);
                 //    }
                 //}
-                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 2";
-                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-                //{
-                //    if (reader.Read())
-                //    {
-                //        ant2.Text = "ant2 : " + reader.GetString(0);
-                //    }
-                //}
-                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 3";
-                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-                //{
-                //    if (reader.Read())
-                //    {
-                //        ant3.Text = "ant3 : " + reader.GetString(0);
-                //    }
-                //}
-                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 4";
-                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-                //{
-                //    if (reader.Read())
-                //    {
-                //        ant4.Text = "ant4 : " + reader.GetString(0);
-                //    }
-                //}
+
             }
             else
             {
@@ -345,8 +412,43 @@ namespace MockupV1
             if (isReset)
             {
                 reset.Enabled = false;
-                dataGridView1.DataSource = new DataGridView();
+                table.Clear(); //old >dataGridView1.DataSource = new DataGridView();
                 resetAnt();
+
+                start.Enabled = false;
+
+                comBaudrate.Enabled = true;
+                comPort.Enabled = true;
+                connectLAN.BackColor = Color.White;
+
+                connectLAN.Enabled = true;
+                status1.ForeColor = Color.Red;
+                status1.Text = "Disconnected";
+                isReset = !isReset;
+
+                //if (databasecmd.connection.State == ConnectionState.Closed)
+                //{
+                //    databasecmd.connectDB();
+
+                //}
+                //try
+                //{
+                //    string StrQuery = @"TRUNCATE TABLE checkpoint;";
+                //    databasecmd.cmd.CommandText = StrQuery;
+                //    Console.WriteLine(StrQuery);
+                //    databasecmd.cmd.ExecuteNonQuery();
+                //}
+                //catch (Exception)
+                //{
+                //    throw;
+                //}
+                //finally
+                //{
+                //    if (databasecmd.connection.State == ConnectionState.Open)
+                //    {
+                //        databasecmd.connection.Close();
+                //    }
+                //}
             }
         }
 
@@ -380,10 +482,9 @@ namespace MockupV1
                 byte[] btAryBuffer = new byte[nCount];
                 iSerialPort.Read(btAryBuffer, 0, nCount);
 
-                string time = DateTime.Now.ToString("hh-mm-ss-ffffff hh:mm:ss:ffffff");
-                //string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
+                string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
 
-                updateDataGridView(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length),time,0);
+                updateDataGridView(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length), time, 0);
                 Console.Write(ByteArrayToString(btAryBuffer, 0, btAryBuffer.Length));
                 Console.WriteLine("");
                 //RunReceiveDataCallback(btAryBuffer);
@@ -558,6 +659,14 @@ namespace MockupV1
             */
             return -1;
         }
+
+        private void pointList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkP = pointList.SelectedItem.ToString();
+            //Console.WriteLine(checkP);
+        }
+
+       
     }
 
 }
