@@ -33,7 +33,6 @@ namespace MockupV1
         private string checkP;
 
         StringBuilder sb = new StringBuilder();
-        List<Data> data = new List<Data>();
 
         private ReaderSetting m_curSetting = new ReaderSetting();
         private byte btPacketType;
@@ -186,6 +185,7 @@ namespace MockupV1
 
         private void sendServer()
         {
+            List<Data> data = new List<Data>();
 
             data.Add(new Data() { epc = "" + dataGridView1.Rows[0].Cells["epc"].Value, time = "" + dataGridView1.Rows[0].Cells["time"].Value, ant = "" + dataGridView1.Rows[0].Cells["ant"].Value, point = "" + checkP });
 
