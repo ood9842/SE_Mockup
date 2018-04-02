@@ -13,7 +13,8 @@ using System.IO.Ports;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
-using Excel = Microsoft.Office.Interop.Excel;
+//using Excel = Microsoft.Office.Interop.Excel;
+using System.IO;
 
 namespace MockupV1
 {
@@ -34,6 +35,8 @@ namespace MockupV1
         private string timeS;
         private string checkP;
 
+        StringBuilder sb = new StringBuilder();
+
         private ReaderSetting m_curSetting = new ReaderSetting();
         private byte btPacketType;
         private byte btDataLen;
@@ -42,6 +45,7 @@ namespace MockupV1
         private byte[] btAryData;
         private byte btCheck;
         private byte[] btAryTranData;
+
 
 
         public SendDataCallback SendCallback;
@@ -56,8 +60,9 @@ namespace MockupV1
         public Form2()
         {
             InitializeComponent();
+            var headers = dataGridView1.Columns.Cast<DataGridViewColumn>();
+            sb.AppendLine(string.Join(",", headers.Select(column => "\"" + column.HeaderText + "\"").ToArray()) + ",\"" + "point" + "\"");
 
-          
             databasecmd = new ConnectDatabase();
         }
 
@@ -67,12 +72,13 @@ namespace MockupV1
             {
                 if (data.Equals(null) || data == "") return;
                 if (isReset) return;
-                dataGridView1.Invoke(new Action(() => { dataGridView1.Rows.Insert(0, data, time, ant); }));
-                //dataGridView1.Rows.Insert(0, data, time, ant);
+                //dataGridView1.Invoke(new Action(() => { dataGridView1.Rows.Insert(0, data, time, ant); }));
+                dataGridView1.Rows.Insert(0, data, time, ant);
                 countDB++;
-                rc.Invoke(new Action(() => { rc.Text = "" + countDB; }));
-                //rc.Text = "" + countDB;
+                //rc.Invoke(new Action(() => { rc.Text = "" + countDB; }));
+                rc.Text = "" + countDB;
                 sendLocal();
+                sendFile();
             }
 
             catch (InvalidOperationException exc)
@@ -90,36 +96,23 @@ namespace MockupV1
 
         private void sendFile()
         {
-            Excel.Application xlApp;
-            Excel.Workbook xlWorkBook;
-            Excel.Worksheet xlWorkSheet;
-            object misValue = System.Reflection.Missing.Value;
 
-            xlApp = new Excel.Application();
-            xlWorkBook = xlApp.Workbooks.Add(misValue);
-            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            int i = 0;
-            int j = 0;
-
-            for (i = 0; i <= dataGridView1.RowCount - 1; i++)
+            //foreach (DataGridViewRow row in dataGridView1.Rows)
+            //{
+            //var cells = row.Cells.Cast<DataGridViewCell>();
+            var cells = dataGridView1.Rows[0].Cells.Cast<DataGridViewCell>();
+            sb.AppendLine(string.Join(",", cells.Select(cell => "\"" + cell.Value + "\"").ToArray())+ ",\"" + checkP + "\"");
+            //}
+            //Console.WriteLine(sb);
+            try
             {
-                for (j = 0; j <= dataGridView1.ColumnCount - 1; j++)
-                {
-                    DataGridViewCell cell = dataGridView1[j, i];
-                    xlWorkSheet.Cells[i + 1, j + 1] = cell.Value;
-                }
+                File.WriteAllText("D:\\demo.csv", sb.ToString(), Encoding.UTF8);
             }
-
-            xlWorkBook.SaveAs("d:\\testfile.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
-            xlWorkBook.Close(true, misValue, misValue);
-            xlApp.Quit();
-
-            releaseObject(xlWorkSheet);
-            releaseObject(xlWorkBook);
-            releaseObject(xlApp);
-
-            //MessageBox.Show("Excel file created , you can find the file c:\\csharp.net-informations.xls");
-        }
+            catch (Exception e)
+            {
+                MessageBox.Show("File write error: " + e.Message);
+            }
+}
 
         private void releaseObject(object obj)
         {
@@ -225,9 +218,9 @@ namespace MockupV1
             int nBaudrate = Convert.ToInt32(comBaudrate.Text);
 
 
-            //string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
+            string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
 
-            //updateDataGridView("010131353513513513", time, 1);
+            updateDataGridView("010131353513513513", time, 1);
             //sendLocal();
             //sendFile();
             reset.Enabled = true;
