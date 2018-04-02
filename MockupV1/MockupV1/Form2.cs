@@ -232,6 +232,8 @@ namespace MockupV1
 
             int nRet = OpenCom(strComPort, nBaudrate, out strException);
 
+            if (strComPort == "COM15") nRet=0;//ทดสอบที่com15
+
             if (nRet != 0)
             {
                 string strLog = "Connection failed, failure cause: " + strException;
@@ -317,6 +319,8 @@ namespace MockupV1
                 start.ForeColor = Color.White;
                 start.Text = "Stop";
                 label6.Enabled = true;
+
+                //ReceivedComData();
                 //updateDataGridView();
                 //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 1";
                 //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
@@ -376,9 +380,9 @@ namespace MockupV1
                 comPort.Enabled = true;
                 connectLAN.BackColor = Color.White;
 
-                connectLAN.Enabled = false;
-                status1.ForeColor = Color.Black;
-                status1.Text = "Connect";
+                connectLAN.Enabled = true;
+                status1.ForeColor = Color.Red;
+                status1.Text = "Disconnected";
 
                 //if (databasecmd.connection.State == ConnectionState.Closed)
                 //{
