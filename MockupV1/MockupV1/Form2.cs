@@ -213,6 +213,11 @@ namespace MockupV1
 
         private void connectLAN_Click(object sender, EventArgs e)
         {
+            if (pointList.Text == null | pointList.Text == "")
+            {
+                MessageBox.Show("Choose CheckPoint,please");
+                return;
+            }
             string strException = string.Empty;
             string strComPort = comPort.Text;
             int nBaudrate = Convert.ToInt32(comBaudrate.Text);
