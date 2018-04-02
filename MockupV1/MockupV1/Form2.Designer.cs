@@ -124,6 +124,7 @@
             this.pointList.Name = "pointList";
             this.pointList.Size = new System.Drawing.Size(148, 21);
             this.pointList.TabIndex = 30;
+            this.pointList.SelectedIndexChanged += new System.EventHandler(this.pointList_SelectedIndexChanged);
             // 
             // checkPoint
             // 
@@ -403,10 +404,10 @@
             this.time,
             this.ant});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView1.Location = new System.Drawing.Point(5, 5);
+            this.dataGridView1.Location = new System.Drawing.Point(5, 29);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(5);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(703, 409);
+            this.dataGridView1.Size = new System.Drawing.Size(703, 385);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 

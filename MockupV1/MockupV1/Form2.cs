@@ -32,6 +32,7 @@ namespace MockupV1
         private int countDB = 0;
         private string epcS;
         private string timeS;
+        private string checkP;
 
         private ReaderSetting m_curSetting = new ReaderSetting();
         private byte btPacketType;
@@ -56,9 +57,7 @@ namespace MockupV1
         {
             InitializeComponent();
 
-            //string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
-
-            //updateDataGridView("010131353513513513",time,1);
+          
             databasecmd = new ConnectDatabase();
         }
 
@@ -67,9 +66,12 @@ namespace MockupV1
             try
             {
                 if (data.Equals(null) || data == "") return;
-                dataGridView1.Invoke(new Action(() => { dataGridView1.Rows.Insert(0,data, time, ant);}));
+                if (isReset) return;
+                dataGridView1.Invoke(new Action(() => { dataGridView1.Rows.Insert(0, data, time, ant); }));
+                //dataGridView1.Rows.Insert(0, data, time, ant);
                 countDB++;
                 rc.Invoke(new Action(() => { rc.Text = "" + countDB; }));
+                //rc.Text = "" + countDB;
                 sendLocal();
             }
 
@@ -147,10 +149,10 @@ namespace MockupV1
             try
             {
                 int i = 0;
-                    string StrQuery = @"INSERT IGNORE INTO checkpoint (epc,time,ant_id) VALUES ("
+                    string StrQuery = @"INSERT INTO checkpoint (epc,time,ant_id,point) VALUES ("
                      + "\"" + dataGridView1.Rows[i].Cells["epc"].Value + "\",\""
                         + dataGridView1.Rows[i].Cells["time"].Value + "\","
-                        + dataGridView1.Rows[i].Cells["ant"].Value + ");";
+                        + dataGridView1.Rows[i].Cells["ant"].Value + ",\""+ checkP + "\""+");";
                     //Console.WriteLine(dataGridView1.Rows.Count);
                     databasecmd.cmd.CommandText = StrQuery;
                     Console.WriteLine(StrQuery);
@@ -222,6 +224,10 @@ namespace MockupV1
             string strComPort = comPort.Text;
             int nBaudrate = Convert.ToInt32(comBaudrate.Text);
 
+
+            //string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Minute, DateTime.Now.Millisecond);
+
+            //updateDataGridView("010131353513513513", time, 1);
             //sendLocal();
             //sendFile();
             reset.Enabled = true;
@@ -365,29 +371,29 @@ namespace MockupV1
                 dataGridView1.DataSource = new DataGridView();
                 resetAnt();
 
-                if (databasecmd.connection.State == ConnectionState.Closed)
-                {
-                    databasecmd.connectDB();
+                //if (databasecmd.connection.State == ConnectionState.Closed)
+                //{
+                //    databasecmd.connectDB();
 
-                }
-                try
-                {
-                    string StrQuery = @"TRUNCATE TABLE checkpoint;";
-                    databasecmd.cmd.CommandText = StrQuery;
-                    Console.WriteLine(StrQuery);
-                    databasecmd.cmd.ExecuteNonQuery();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    if (databasecmd.connection.State == ConnectionState.Open)
-                    {
-                        databasecmd.connection.Close();
-                    }
-                }
+                //}
+                //try
+                //{
+                //    string StrQuery = @"TRUNCATE TABLE checkpoint;";
+                //    databasecmd.cmd.CommandText = StrQuery;
+                //    Console.WriteLine(StrQuery);
+                //    databasecmd.cmd.ExecuteNonQuery();
+                //}
+                //catch (Exception)
+                //{
+                //    throw;
+                //}
+                //finally
+                //{
+                //    if (databasecmd.connection.State == ConnectionState.Open)
+                //    {
+                //        databasecmd.connection.Close();
+                //    }
+                //}
             }
         }
 
@@ -599,6 +605,12 @@ namespace MockupV1
             }
             */
             return -1;
+        }
+
+        private void pointList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkP = pointList.SelectedItem.ToString();
+            //Console.WriteLine(checkP);
         }
     }
 
