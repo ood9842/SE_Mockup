@@ -13,7 +13,6 @@ using System.IO.Ports;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
-//using Excel = Microsoft.Office.Interop.Excel;
 using System.IO;
 
 namespace MockupV1
@@ -96,6 +95,7 @@ namespace MockupV1
                 sendLocal();
                 sendFile();
                 sendServer();
+                checkDB();
             }
 
             catch (InvalidOperationException exc)
@@ -185,9 +185,9 @@ namespace MockupV1
 
         private void sendServer()
         {
-            List<Data> data = new List<Data>();
+            List<DataValue> data = new List<DataValue>();
 
-            data.Add(new Data() { epc = "" + dataGridView1.Rows[0].Cells["epc"].Value, time = "" + dataGridView1.Rows[0].Cells["time"].Value, ant = "" + dataGridView1.Rows[0].Cells["ant"].Value, point = "" + checkP });
+            data.Add(new DataValue() { epc = "" + dataGridView1.Rows[0].Cells["epc"].Value, time = "" + dataGridView1.Rows[0].Cells["time"].Value, ant = "" + dataGridView1.Rows[0].Cells["ant"].Value, point = "" + checkP });
 
 
 
@@ -221,6 +221,58 @@ namespace MockupV1
                     //pass.Text = result.ToString();
                 }
             }
+        }
+
+        private void checkDB()
+        {
+            Record dataValues = new Record();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.0.109/api/get.php");
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+                Console.WriteLine(result);
+                dataValues = result.ToData();
+                //foreach (var item in dataValues.records)
+                //{
+                //    Console.WriteLine("time: {0}", item.time);
+                //}
+            }
+
+            if (databasecmd.connection.State == ConnectionState.Closed)
+            {
+                databasecmd.connectDB();
+
+            }
+            try
+            {
+                for (int i = 0; i < dataValues.records.Count;i++)
+                {
+                    string StrQuery = @"UPDATE checkpoint SET add_in_server = 1 WHERE epc = "+"\"" + dataValues.records[i].epc + "\"AND time = \"" + dataValues.records[i].time +"\";";
+                    //Console.WriteLine(dataGridView1.Rows.Count);
+                    databasecmd.cmd.CommandText = StrQuery;
+                    Console.WriteLine(StrQuery);
+                    databasecmd.cmd.ExecuteNonQuery();
+                }
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (databasecmd.connection.State == ConnectionState.Open)
+                {
+                    databasecmd.connection.Close();
+                }
+            }
+
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -285,6 +337,7 @@ namespace MockupV1
 
             string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
 
+            //checkDB();
             updateDataGridView("010131353513513513", time, 1);
             //sendLocal();
             //sendFile();

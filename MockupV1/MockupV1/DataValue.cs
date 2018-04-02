@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MockupV1
 {
-    public class Data
+    public class DataValue
     {
         public string epc { get; set; }
         public string time { get; set; }

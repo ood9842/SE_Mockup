@@ -72,3 +72,5 @@ C:\Users\natthaphon\Source\Repos\new\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql
 C:\Users\natthaphon\Source\Repos\new\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Web.xml
 C:\Users\natthaphon\Source\Repos\new\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.CopyComplete
 C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.ResolveComReference.cache
+D:\SE_Mockup\MockupV1\MockupV1\bin\Debug\Newtonsoft.Json.dll
+D:\SE_Mockup\MockupV1\MockupV1\bin\Debug\Newtonsoft.Json.xml
