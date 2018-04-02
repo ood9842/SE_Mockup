@@ -22,12 +22,9 @@ namespace MockupV1
     public partial class Form2 : Form
     {
         private static ConnectDatabase databasecmd;
-        private bool isStart = false;
-        private bool isReset = false;
-        private int readCount = 0;
-        private int addDataCount = 0;
-        private int addServerCount = 0;
-        private int addFileCount = 0;
+        private bool isStart = false; //check button
+        private bool isReset = false; //check button
+        private DataTable table; //table in dataGridview
         private SerialPort iSerialPort;
         private int m_nType = -1;
         private int countDB = 0;
@@ -60,6 +57,11 @@ namespace MockupV1
         public Form2()
         {
             InitializeComponent();
+            table = new DataTable();
+            table.Columns.Add(new DataColumn("epc", typeof(string)));
+            table.Columns.Add(new DataColumn("time", typeof(string)));
+            table.Columns.Add(new DataColumn("and", typeof(string)));
+            dataGridView1.DataSource = table;
             var headers = dataGridView1.Columns.Cast<DataGridViewColumn>();
             sb.AppendLine(string.Join(",", headers.Select(column => "\"" + column.HeaderText + "\"").ToArray()) + ",\"" + "point" + "\"");
 
@@ -170,7 +172,10 @@ namespace MockupV1
         {
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
-            WindowState = FormWindowState.Maximized;
+
+            dataGridView1.Columns[0].Width = 400;
+            dataGridView1.Columns[0].Width = 200;
+            dataGridView1.Columns[2].Width = dataGridView1.Width - dataGridView1.Columns[0].Width - dataGridView1.Columns[0].Width;
 
             ant1.ForeColor = Color.Gray;
             ant2.ForeColor = Color.Gray;
@@ -371,7 +376,7 @@ namespace MockupV1
             if (isReset)
             {
                 reset.Enabled = false;
-                dataGridView1.DataSource = new DataGridView();
+                table.Clear(); //old >dataGridView1.DataSource = new DataGridView();
                 resetAnt();
 
                 start.Enabled = false;
