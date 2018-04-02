@@ -57,9 +57,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.epc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ant = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.addf = new System.Windows.Forms.Label();
             this.adds = new System.Windows.Forms.Label();
@@ -263,7 +260,7 @@
             this.optionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1096, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1212, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -376,7 +373,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1096, 599);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1212, 642);
             this.tableLayoutPanel1.TabIndex = 35;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -387,44 +384,25 @@
             this.tableLayoutPanel2.Controls.Add(this.dataGridView1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(383, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(424, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(713, 599);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(788, 642);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.epc,
-            this.time,
-            this.ant});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView1.Location = new System.Drawing.Point(5, 29);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(5);
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(5, 25);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(5, 25, 5, 5);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(703, 385);
+            this.dataGridView1.Size = new System.Drawing.Size(778, 419);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // epc
-            // 
-            this.epc.HeaderText = "epc";
-            this.epc.Name = "epc";
-            // 
-            // time
-            // 
-            this.time.HeaderText = "time";
-            this.time.Name = "time";
-            // 
-            // ant
-            // 
-            this.ant.HeaderText = "ant";
-            this.ant.Name = "ant";
             // 
             // panel3
             // 
@@ -447,10 +425,10 @@
             this.panel3.Controls.Add(this.label12);
             this.panel3.Controls.Add(this.label13);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 419);
+            this.panel3.Location = new System.Drawing.Point(0, 449);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(713, 180);
+            this.panel3.Size = new System.Drawing.Size(788, 193);
             this.panel3.TabIndex = 1;
             // 
             // addf
@@ -513,7 +491,7 @@
             this.reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.reset.Enabled = false;
             this.reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reset.Location = new System.Drawing.Point(590, 113);
+            this.reset.Location = new System.Drawing.Point(665, 126);
             this.reset.Name = "reset";
             this.reset.Size = new System.Drawing.Size(111, 55);
             this.reset.TabIndex = 16;
@@ -573,7 +551,6 @@
             this.status1.Size = new System.Drawing.Size(99, 18);
             this.status1.TabIndex = 31;
             this.status1.Text = "Disconnected";
-            //this.status1.Click += new System.EventHandler(this.status1_Click);
             // 
             // label7
             // 
@@ -668,11 +645,11 @@
             this.panel1.Controls.Add(this.ant8);
             this.panel1.Controls.Add(this.switchRate);
             this.panel1.Controls.Add(this.start);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 15);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 15, 3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(383, 599);
+            this.panel1.Size = new System.Drawing.Size(418, 624);
             this.panel1.TabIndex = 1;
             // 
             // label6
@@ -752,7 +729,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1096, 599);
+            this.ClientSize = new System.Drawing.Size(1212, 642);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MainMenuStrip = this.menuStrip1;
@@ -830,8 +807,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn epc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn time;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ant;
     }
 }

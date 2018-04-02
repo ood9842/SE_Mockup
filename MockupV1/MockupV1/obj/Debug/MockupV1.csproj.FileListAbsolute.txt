@@ -71,3 +71,4 @@ C:\Users\natthaphon\Source\Repos\new\SE_Mockup\MockupV1\MockupV1\bin\Debug\Mocku
 C:\Users\natthaphon\Source\Repos\new\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Data.xml
 C:\Users\natthaphon\Source\Repos\new\SE_Mockup\MockupV1\MockupV1\bin\Debug\MySql.Web.xml
 C:\Users\natthaphon\Source\Repos\new\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.CopyComplete
+C:\Users\chets\Documents\GitHub\SE_Mockup\MockupV1\MockupV1\obj\Debug\MockupV1.csproj.ResolveComReference.cache
