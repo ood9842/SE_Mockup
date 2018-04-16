@@ -74,27 +74,27 @@ namespace MockupV1
                 DataRow r;
                 if (data.Equals(null) || data == "") return;
                 if (isReset) return;
-                //dataGridView1.Invoke(new Action(() =>
-                //{
-                //    r = table.NewRow();
-                //    r["epc"] = data;
-                //    r["time"] = time;
-                //    r["ant"] = ant;
-                //    table.Rows.InsertAt(r, 0);
-                //}));
-                
-                r = table.NewRow();
-                r["epc"] = data;
-                r["time"] = time;
-                r["ant"] = ant;
-                table.Rows.InsertAt(r,0);
+                dataGridView1.Invoke(new Action(() =>
+                {
+                    r = table.NewRow();
+                    r["epc"] = data;
+                    r["time"] = time;
+                    r["ant"] = ant;
+                    table.Rows.InsertAt(r, 0);
+                }));
+
+                //r = table.NewRow();
+                //r["epc"] = data;
+                //r["time"] = time;
+                //r["ant"] = ant;
+                //table.Rows.InsertAt(r,0); // test without hardware
 
                 countDB++;
-                //rc.Invoke(new Action(() => { rc.Text = "" + countDB; }));
-                rc.Text = "" + countDB;
+                rc.Invoke(new Action(() => { rc.Text = "" + countDB; }));
+                //rc.Text = "" + countDB; // test without hardware
                 sendLocal();
                 sendFile();
-                sendServer();
+                sendCloud();
                 checkDB();
             }
 
@@ -111,16 +111,10 @@ namespace MockupV1
         }
 
 
-        private void sendFile()
+        private void sendFile() //send data to file .csv
         {
-
-            //foreach (DataGridViewRow row in dataGridView1.Rows)
-            //{
-            //var cells = row.Cells.Cast<DataGridViewCell>();
             var cells = dataGridView1.Rows[0].Cells.Cast<DataGridViewCell>();
             sb.AppendLine(string.Join(",", cells.Select(cell => "\"" + cell.Value + "\"").ToArray())+ ",\"" + checkP + "\"");
-            //}
-            //Console.WriteLine(sb);
             try
             {
                 File.WriteAllText("D:\\demo.csv", sb.ToString(), Encoding.UTF8);
@@ -129,32 +123,13 @@ namespace MockupV1
             {
                 MessageBox.Show("File write error: " + e.Message);
             }
-}
-
-        private void releaseObject(object obj)
-        {
-            try
-            {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
-                obj = null;
-            }
-            catch (Exception ex)
-            {
-                obj = null;
-                MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
-            }
-            finally
-            {
-                GC.Collect();
-            }
         }
 
-        private void sendLocal()
+        private void sendLocal() //send data to localdatabase
         {
             if (databasecmd.connection.State == ConnectionState.Closed)
             {
                 databasecmd.connectDB();
-
             }
             try
             {
@@ -163,12 +138,9 @@ namespace MockupV1
                      + "\"" + dataGridView1.Rows[i].Cells["epc"].Value + "\",\""
                         + dataGridView1.Rows[i].Cells["time"].Value + "\","
                         + dataGridView1.Rows[i].Cells["ant"].Value + ",\""+ checkP + "\""+");";
-                    //Console.WriteLine(dataGridView1.Rows.Count);
                     databasecmd.cmd.CommandText = StrQuery;
                     Console.WriteLine(StrQuery);
                     databasecmd.cmd.ExecuteNonQuery();
-
-
             }
             catch (Exception)
             {
@@ -183,7 +155,7 @@ namespace MockupV1
             }
         }
 
-        private void sendServer()
+        private void sendCloud() // send data to cloud
         {
             List<DataValue> data = new List<DataValue>();
 
@@ -203,12 +175,6 @@ namespace MockupV1
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                //string loginjson = new JavaScriptSerializer().Serialize(new
-                //{
-                //    userid = username.Text,
-                //    password = pass.Text
-                //});
-
                 streamWriter.Write(jsonString);
                 streamWriter.Flush();
                 streamWriter.Close();
@@ -218,12 +184,11 @@ namespace MockupV1
                 {
                     var result = streamReader.ReadToEnd();
                     Console.WriteLine(result);
-                    //pass.Text = result.ToString();
                 }
             }
         }
 
-        private void checkDB()
+        private void checkDB() // compare data form cloud and localdatabase
         {
             Record dataValues = new Record();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.0.109/api/get.php");
@@ -237,10 +202,6 @@ namespace MockupV1
                 var result = streamReader.ReadToEnd();
                 Console.WriteLine(result);
                 dataValues = result.ToData();
-                //foreach (var item in dataValues.records)
-                //{
-                //    Console.WriteLine("time: {0}", item.time);
-                //}
             }
 
             if (databasecmd.connection.State == ConnectionState.Closed)
@@ -253,7 +214,6 @@ namespace MockupV1
                 for (int i = 0; i < dataValues.records.Count;i++)
                 {
                     string StrQuery = @"UPDATE checkpoint SET add_in_server = 1 WHERE epc = "+"\"" + dataValues.records[i].epc + "\"AND time = \"" + dataValues.records[i].time +"\";";
-                    //Console.WriteLine(dataGridView1.Rows.Count);
                     databasecmd.cmd.CommandText = StrQuery;
                     Console.WriteLine(StrQuery);
                     databasecmd.cmd.ExecuteNonQuery();
@@ -273,6 +233,24 @@ namespace MockupV1
                 }
             }
 
+        }
+
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
+            }
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -337,10 +315,7 @@ namespace MockupV1
 
             string time = string.Format("{0}:{1}:{2}:{3}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
 
-            //checkDB();
             updateDataGridView("010131353513513513", time, 1);
-            //sendLocal();
-            //sendFile();
             reset.Enabled = true;
 
             int nRet = OpenCom(strComPort, nBaudrate, out strException);
@@ -433,17 +408,6 @@ namespace MockupV1
                 start.Text = "Stop";
                 label6.Enabled = true;
 
-                //ReceivedComData();
-                //updateDataGridView();
-                //databasecmd.cmd.CommandText = "SELECT MAX(TIME(time)) as time FROM checkpoint WHERE ant_id = 1";
-                //using (MySqlDataReader reader = databasecmd.cmd.ExecuteReader())
-                //{
-                //    if (reader.Read())
-                //    {
-                //        ant1.Text = "ant1 : " + reader.GetString(0);
-                //    }
-                //}
-
             }
             else
             {
@@ -475,29 +439,6 @@ namespace MockupV1
                 status1.Text = "Disconnected";
                 isReset = !isReset;
 
-                //if (databasecmd.connection.State == ConnectionState.Closed)
-                //{
-                //    databasecmd.connectDB();
-
-                //}
-                //try
-                //{
-                //    string StrQuery = @"TRUNCATE TABLE checkpoint;";
-                //    databasecmd.cmd.CommandText = StrQuery;
-                //    Console.WriteLine(StrQuery);
-                //    databasecmd.cmd.ExecuteNonQuery();
-                //}
-                //catch (Exception)
-                //{
-                //    throw;
-                //}
-                //finally
-                //{
-                //    if (databasecmd.connection.State == ConnectionState.Open)
-                //    {
-                //        databasecmd.connection.Close();
-                //    }
-                //}
             }
         }
 
